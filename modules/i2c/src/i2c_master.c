@@ -29,10 +29,16 @@ extern i2c_regop_res_t write_reg16(i2c_master_t *ctx, uint8_t device_addr, uint1
 #define JITTER_TICKS    0
 #define WAKEUP_TICKS    20
 
+// if APP_BUILD_ARCH not defined pick APP_BUILD_ARCH_XS3A
+#if (!defined(APP_BUILD_ARCH_XS3A) && !defined(APP_BUILD_ARCH_VX4A))
+#define APP_BUILD_ARCH_XS3A
+#endif
+
 static uint32_t interrupt_state_get(void)
 {
     uint32_t state;
-    /*
+    
+    #ifdef APP_BUILD_ARCH_XS3A 
     asm volatile(
         "getsr r11, %1\n"
         "mov %0, r11"
@@ -40,14 +46,16 @@ static uint32_t interrupt_state_get(void)
         : "n"(XS1_SR_IEBLE_MASK)
         : "r11"
     );
-    */
+    #elif defined(APP_BUILD_ARCH_VX4A)
     asm volatile(
         "csrr %0, mstatus\n"  // Load the status register into the temporary register
         "and %0, %0, %1\n"     // Apply the mask to the status register
         : "=r"(state)          // Output: state is written to
         : "i"(XS1_SR_IEBLE_MASK) // Input: immediate mask
     );
-
+    #else
+    #error "Unsupported architecture"
+    #endif
 
     return state;
 }
