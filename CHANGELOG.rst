@@ -1,6 +1,13 @@
 IO Framework change log
 =======================
 
+UNRELEASED
+----------
+
+  * ADDED: Experimental i2c and i2s support for vx4 platform. 
+  * ADDED: Xcommon CMake build support. 
+  * CHANGE: Update tests XTC tools version to 15.3.1.
+
 3.6.0
 -----
   
