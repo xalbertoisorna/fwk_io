@@ -34,7 +34,7 @@ static uint32_t interrupt_state_get(void)
 {
     uint32_t state;
     
-    #if defined(__XS3A__)
+    #if defined(__XS2A__) || defined(__XS3A__)
     asm volatile(
         "getsr r11, %1\n"
         "mov %0, r11"
