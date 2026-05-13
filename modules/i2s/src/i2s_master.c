@@ -324,7 +324,7 @@ static i2s_restart_t i2s_ratio_n(
                 #elif defined (__VX4A__) || defined(__VX4B__)
                 asm volatile("xm.syncr %0" : : "r" (p_dout[0]));
                 #else
-                #error "Unsupported architeccture"
+                #error "Unsupported architecture"
                 #endif
             }
             clock_stop(bclk);
